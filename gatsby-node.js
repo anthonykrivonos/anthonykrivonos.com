@@ -34,9 +34,10 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
   
 exports.createPages = ({ actions, page }) => {
-  	const { createPage } = actions
+  	// const { createPage } = actions
 	
-	  createPage(page)
+	//   createPage(page)
+	
 	// return graphql(`
 	// 	{
 	// 		allMarkdownRemark(limit: 1000) {
