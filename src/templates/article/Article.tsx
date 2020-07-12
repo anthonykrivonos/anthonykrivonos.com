@@ -1,5 +1,6 @@
-import React, { ReactNode, ComponentProps } from 'react'
+import React, { ReactNode } from 'react'
 import ReactMarkdown from 'react-markdown/with-html'
+import { graphql } from 'gatsby'
 import $ from 'jquery'
 
 import { Article as ArticleInterface } from '../../models'
@@ -7,13 +8,15 @@ import { Wrapper, View, CacheImage, Tag, Footer, Button } from '../../components
 import { Page } from '../Page'
 import { Navigation, DeviceUtil } from '../../utils'
 import './Article.sass'
+import '../../App.sass'
 
 interface ArticleProps {
     article?: ArticleInterface
     isPreview?: boolean
+    data?: any
 }
 
-export class Article extends Page<ArticleProps> {
+export default class Article extends Page<ArticleProps> {
 
     constructor(props:any) {
         super(props)
@@ -41,7 +44,8 @@ export class Article extends Page<ArticleProps> {
     }
 
     public renderDesktop = ():ReactNode => {
-        const { article, isPreview } = this.props
+        const article = this.getArticle()
+        const isPreview = this.props.isPreview
         return (
             <Wrapper className={'w-100'}>
                 <View className={`article-image-container article-image-container-cover w-100`}>
@@ -49,7 +53,7 @@ export class Article extends Page<ArticleProps> {
                 </View>
                 <View className={'article-container-offset bg-white'}>
                     <View className={'article container'}>
-                        <View className={'mt-4 pt-4'}>
+                        <View className={'pt-4'}>
                             {
                                 !isPreview &&
                                 <Button
@@ -97,8 +101,40 @@ export class Article extends Page<ArticleProps> {
         )
     }
 
+    private getArticle = ():ArticleInterface => {
+        if (this.props.article) {
+            return this.props.article
+        }
+        const articleFields = this.props.data.markdownRemark
+        const article = articleFields.frontmatter
+        article.slug = articleFields.fields.slug
+        article.image = article.image.publicURL
+        return article
+    }
+
     public static defaultProps = {
         isPreview: false
     }
 
 }
+
+export const pageQuery = graphql`
+    query BlogPostBySlug($slug: String!) {
+        markdownRemark(fields: { slug: { eq: $slug } }) {
+            frontmatter {
+                caption
+                date
+                subtitle
+                tags
+                templateKey
+                title
+                image {
+                    publicURL
+                }
+            }
+            fields {
+                slug
+            }
+        }
+    }
+`

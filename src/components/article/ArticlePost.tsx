@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { navigate } from 'gatsby'
 
 import { Article } from '../../models'
 
@@ -9,7 +10,6 @@ import { Tag } from '../tag'
 
 import './ArticlePost.sass'
 import { addClasses } from '../../constants'
-import { Navigation } from '../../utils'
 
 export interface ArticleProps {
     side: 'left' | 'right'
@@ -109,12 +109,18 @@ export class ArticlePost extends Component<ArticleProps> {
                 borderRadius: 0
             }, 500)
 
+            setTimeout(() => {
+                containerCopy.animate({
+                    opacity: 0,
+                }, 500)
+            }, 500)
+
             // Animate the page container
             $('.container').animate({
                 opacity: 0,
             }, 500)
 
-            setTimeout(() => Navigation.go(`/${this.props.article.slug}`), 500)
+            setTimeout(() => navigate(`/article${this.props.article.slug}`), 500)
         })
     }
 

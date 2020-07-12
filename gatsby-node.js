@@ -33,44 +33,54 @@ exports.createSchemaCustomization = ({ actions }) => {
 	createTypes(typeDefs)
 }
   
-exports.createPages = ({ actions, page }) => {
-  	// const { createPage } = actions
+exports.createPages = async ({ graphql, actions }) => {
+  	const { createPage } = actions
 	
-	//   createPage(page)
-	
-	// return graphql(`
-	// 	{
-	// 		allMarkdownRemark(limit: 1000) {
-	// 			edges {
-	// 				node {
-	// 					id
-	// 					fields {
-	// 						slug
-	// 					}
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// `).then((result) => {
-	// 	if (result.errors) {
-	// 	result.errors.forEach((e) => console.error(e.toString()))
-	// 	return Promise.reject(result.errors)
-	// 	}
+	const result = await graphql(`
+		query {
+			allMarkdownRemark {
+				edges {
+					node {
+						frontmatter {
+							caption
+							date
+							subtitle
+							tags
+							templateKey
+							title
+							image {
+								publicURL
+							}
+						}
+						fields {
+							slug
+						}
+					}
+				}
+			}
+		}
+	`)
 
-	// 	const articles = result.data.allMarkdownRemark.edges
+	if (result.errors) {
+		result.errors.forEach((e) => console.error(e.toString()))
+		return result.errors
+	}
 
-	// 	articles.forEach((edge) => {
-	// 	const id = edge.node.id
-	// 	createPage({
-	// 		path: edge.node.fields.slug,
-	// 		component: path.resolve(
-	// 			`src/templates/article-${String(edge.node.fields.slug)}.tsx`
-	// 		),
-	// 		// additional data can be passed via context
-	// 		context: {
-	// 			id,
-	// 		},
-	// 	})
-	// 	})
-	// })
+	// Create article pages
+	const articles = result.data.allMarkdownRemark.edges
+	articles.forEach((edge) => {
+		const id = edge.node.id
+		const slug = edge.node.fields.slug
+		const pagePath = `/article${slug}`
+		console.log(slug)
+		console.log(pagePath)
+		createPage({
+			path: pagePath,
+			component: path.resolve(`src/templates/article/Article.tsx`),
+			context: {
+				id,
+				slug,
+			},
+		})
+	})
 }

@@ -12,11 +12,17 @@ export enum DeviceSize {
 export class DeviceUtil {
 
     public static getWidth = ():number => {
-        return window.innerWidth;
+        if (typeof window !== 'undefined') {
+            return window.innerWidth
+        }
+        return 0
     }
 
     public static getHeight = ():number => {
-        return window.innerHeight;
+        if (typeof window !== 'undefined') {
+            return window.innerHeight
+        }
+        return 0
     }
 
     public static isXL = ():boolean => {
@@ -36,11 +42,15 @@ export class DeviceUtil {
     }
 
     public static onReady = (func:()=>void):void => {
-        $(document).ready(() => func())
+        if (typeof document !== 'undefined') {
+            $(document).ready(() => func())
+        }
     }
 
     public static onResize = (func:(width:number, height:number)=>void):void => {
-        $(window).resize(() => func(DeviceUtil.getWidth(), DeviceUtil.getHeight()))
+        if (typeof window !== 'undefined') {
+            $(window).resize(() => func(DeviceUtil.getWidth(), DeviceUtil.getHeight()))
+        }
     }
 
 }

@@ -8,7 +8,6 @@ module.exports = {
     'gatsby-plugin-sass',
     'gatsby-plugin-typescript',
     {
-      // keep as first gatsby-source-filesystem plugin for gatsby image support
       resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/static/img`,
@@ -18,15 +17,8 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        path: `${__dirname}/src/pages`,
+        path: `${__dirname}/static/articles`,
         name: 'pages',
-      },
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        path: `${__dirname}/src/img`,
-        name: 'images',
       },
     },
     'gatsby-plugin-sharp',
