@@ -18,6 +18,14 @@ export class Page<T=any> extends Component<RouteComponentProps<T>> {
         })
     }
 
+    public componentDidMount = () => {
+        console.clear()
+    }
+
+    public componentDidUpdate = () => {
+        console.clear()
+    }
+
     public state = {
         isDesktop: null
     } as any

@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { Router, RouteComponentProps } from "@reach/router"
 import { graphql } from 'gatsby'
+import ReactGA from 'react-ga'
 
 import { Home, Article } from '../templates'
 import { Article as ArticleInterface } from '../models'
@@ -10,6 +11,15 @@ export interface PageProps extends RouteComponentProps {
 }
 
 export class App extends Component<PageProps> {
+
+	public componentDidMount = () => {
+		try {
+			ReactGA.initialize(process.env.GATSBY_GA_TRACKING_ID!)
+			ReactGA.pageview(window.location.pathname + window.location.search)
+		} catch {
+			console.error('Could not load Google Analytics')
+		}
+	}
 
 	public render = () => {
 		const articles = this.getArticles()
@@ -43,7 +53,7 @@ export class App extends Component<PageProps> {
 
 export const pageQuery = graphql`
     query {
-        allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+        allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }, filter: {frontmatter: {templateKey: {eq: "article"}}}) {
             edges {
                 node {
                     frontmatter {

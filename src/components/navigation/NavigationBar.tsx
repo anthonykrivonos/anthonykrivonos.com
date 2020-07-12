@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { StaticQuery, graphql } from 'gatsby'
 
 import { View } from '../view'
 import { CacheImage } from '../image'
@@ -7,26 +8,11 @@ import { Button } from '../button'
 import { Navigation } from '../../utils'
 import { colors } from '../../constants'
 
-const URLS = [
-    {
-        name: 'Resume',
-        src: ''
-    },
-    {
-        name: 'GitHub',
-        src: 'https://github.com/anthonykrivonos'
-    },
-    {
-        name: 'LinkedIn',
-        src: 'https://linkedin.com/in/anthonykrivonos'
-    },
-    {
-        name: 'Dribbble',
-        src: 'https://dribbble.com/anthonykrivonos'
-    },
-] as URL[]
+interface NavigationBarProps {
+    data?: any
+}
 
-export class NavigationBar extends Component {
+export class NavigationBar extends Component<NavigationBarProps> {
 
     public render = () => {
         return (
@@ -38,19 +24,40 @@ export class NavigationBar extends Component {
                     <View className={'font-title weight-black h4 mt-3'}>
                         Anthony Krivonos
                     </View>
-                    <View>
-                        {
-                            URLS.map(url => (
-                                <Button
-                                    key={url.name}
-                                    text={url.name}
-                                    onClick={() => Navigation.go(url.src)}
-                                    textColor={colors.medium}
-                                    className={'mr-2'}
-                                />
-                            ))
-                        }
-                    </View>
+                    <StaticQuery
+                        query={graphql`
+                            query {
+                                allMarkdownRemark(filter: {frontmatter: {templateKey: {ne: "article"}}}, sort: {fields: frontmatter___priority}) {
+                                    edges {
+                                        node {
+                                            frontmatter {
+                                                title
+                                                url
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        `}
+                        render={data => (
+                            <View>
+                                {
+                                    data.allMarkdownRemark.edges.map(edge => ({
+                                        name: edge.node.frontmatter.title,
+                                        src: edge.node.frontmatter.url,
+                                    }) as URL).map(url => (
+                                        <Button
+                                            key={url.name}
+                                            text={url.name}
+                                            onClick={() => Navigation.go(url.src)}
+                                            textColor={colors.medium}
+                                            className={'mr-2'}
+                                        />
+                                    ))
+                                }
+                            </View>
+                        )}
+                    />
                 </View>
             </View>
         )

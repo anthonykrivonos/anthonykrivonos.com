@@ -16,29 +16,13 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 		})
 	}
 }
-
-exports.createSchemaCustomization = ({ actions }) => {
-	const { createTypes } = actions
-	const typeDefs = `
-		type Article {
-			title: String!
-			subtitle: String!
-			caption: String
-			imageUrl: String!
-			tags: [String!]
-			markdownBody: String!
-			slug: String!
-		}
-	`
-	createTypes(typeDefs)
-}
   
 exports.createPages = async ({ graphql, actions }) => {
   	const { createPage } = actions
 	
 	const result = await graphql(`
 		query {
-			allMarkdownRemark {
+			allMarkdownRemark(filter: {frontmatter: {templateKey: {eq: "article"}}}) {
 				edges {
 					node {
 						frontmatter {

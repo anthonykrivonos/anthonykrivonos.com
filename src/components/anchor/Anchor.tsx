@@ -25,7 +25,7 @@ export class Anchor extends Component<AnchorProps> {
             <View onClick={onClick} className={'anchor-container position-relative clickable d-flex flex-row'} onMouseOver={this.onHover} onMouseOut={this.onHoverOut}>
                 {
                     children.split(' ').map((word, i) => (
-                        <View>
+                        <View key={`outer-${word}-${i}`}>
                             {
                                 word.split('').map((char, j) => (
                                     <View key={`inner-${char}-${j}`} className={'position-relative'} inline>

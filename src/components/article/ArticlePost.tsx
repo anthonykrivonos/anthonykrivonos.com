@@ -12,7 +12,7 @@ import './ArticlePost.sass'
 import { addClasses } from '../../constants'
 
 export interface ArticleProps {
-    side: 'left' | 'right'
+    side: 'left' | 'right' | 'mobile'
     article: Article
 }
 
@@ -40,6 +40,12 @@ export class ArticlePost extends Component<ArticleProps> {
                 <View className={addClasses('row d-flex', side === 'left' ? 'flex-row' : 'flex-row-reverse')}>
                     <View className={'col-md-4 pr-4'}>
                         <Anchor onClick={this.openArticle} className={'font-header weight-black h2'}>{article.title}</Anchor>
+                        {
+                            side === 'mobile' &&
+                            <View onMouseOver={this.onHover} onMouseOut={this.onHoverOut} onMouseDown={this.onClick} onMouseUp={this.onClickUp} className={`article-image-container article-image-${this.imageId} w-100 mt-3 mb-3`}>
+                                <CacheImage className={`article-image article-image-${this.imageId} w-100 h-100`} src={article.image} alt={article.title} />
+                            </View>
+                        }
                         <View className={'article-line bg-light mt-4 mb-3'} />
                         <View className={'font-title weight-bold h5'}>{article.subtitle}</View>
                         { article.caption && <View className={'text-upper weight-bold font-italic color-light'}>{article.caption}</View> }
@@ -51,11 +57,14 @@ export class ArticlePost extends Component<ArticleProps> {
                             }
                         </View>
                     </View>
-                    <View className={'col-md-8 d-flex align-items-center justify-content-center'}>
-                        <View  onMouseOver={this.onHover} onMouseOut={this.onHoverOut} onMouseDown={this.onClick} onMouseUp={this.onClickUp} className={`article-image-container article-image-${this.imageId} w-100`}>
-                            <CacheImage className={`article-image article-image-${this.imageId} w-100 h-100`} src={article.image} alt={article.title} />
+                    {
+                        side !== 'mobile' &&
+                        <View className={'col-md-8 d-flex align-items-center justify-content-center'}>
+                            <View onMouseOver={this.onHover} onMouseOut={this.onHoverOut} onMouseDown={this.onClick} onMouseUp={this.onClickUp} className={`article-image-container article-image-${this.imageId} w-100`}>
+                                <CacheImage className={`article-image article-image-${this.imageId} w-100 h-100`} src={article.image} alt={article.title} />
+                            </View>
                         </View>
-                    </View>
+                    }
                 </View>
             </View>
         )
