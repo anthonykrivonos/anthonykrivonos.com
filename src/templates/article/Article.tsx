@@ -82,8 +82,14 @@ export default class Article extends Page<ArticleProps> {
                                     source={article.body}
                                     escapeHtml={false}
                                     renderers={{
-                                        heading: props => <View {...props} className={'font-header weight-bold'} style={{ fontSize: `${1.2 + 1/props.level}em` }} />,
+                                        heading: props => <View {...props} className={'font-header weight-bold'} style={{
+                                            fontSize: `${1.2 + 1/props.level}em`,
+                                            marginTop: `${2.6/props.level}em`,
+                                            marginBottom: `${0.8/props.level}em`,
+                                        }} />,
                                         hr: () => <View className={'article-line bg-light w-100 mt-4 mb-3'} />,
+                                        blockquote: props => <View {...props} className={'article-blockquote'} />,
+                                        emphasis: props => <View {...props} className={'font-italic font-title weight-regular'} />,
                                     }}
                                 />
                             </View>
@@ -109,6 +115,7 @@ export default class Article extends Page<ArticleProps> {
         const article = articleFields.frontmatter
         article.slug = articleFields.fields.slug
         article.image = article.image.publicURL
+        article.body = articleFields.rawMarkdownBody
         return article
     }
 
@@ -121,6 +128,7 @@ export default class Article extends Page<ArticleProps> {
 export const pageQuery = graphql`
     query BlogPostBySlug($slug: String!) {
         markdownRemark(fields: { slug: { eq: $slug } }) {
+            rawMarkdownBody
             frontmatter {
                 caption
                 date
