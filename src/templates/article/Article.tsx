@@ -89,7 +89,7 @@ export default class Article extends Page<ArticleProps> {
                                         }} />,
                                         hr: () => <View className={'article-line bg-light w-100 mt-4 mb-3'} />,
                                         blockquote: props => <View {...props} className={'article-blockquote'} />,
-                                        emphasis: props => <View {...props} className={'font-italic font-title weight-regular'} />,
+                                        emphasis: props => <View inline {...props} className={'font-italic font-title weight-regular'} />,
                                     }}
                                 />
                             </View>
