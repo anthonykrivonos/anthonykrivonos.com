@@ -77,6 +77,14 @@ module.exports = {
         mergeLinkHeaders: false,
         mergeCachingHeaders: false
       },
+    },
+    {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        name: 'anthonykrivonos.com',
+        short_name: 'anthonykrivonos.com',
+        icon: 'src/images/favicon.png',
+      }
     }
   ],
 }

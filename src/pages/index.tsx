@@ -12,6 +12,13 @@ export interface PageProps extends RouteComponentProps {
 
 export class App extends Component<PageProps> {
 
+	private articles!: ArticleInterface[]
+
+	constructor (props: any) {
+		super(props)
+		this.articles = this.getArticles()
+	}
+
 	public componentDidMount = () => {
 		try {
 			ReactGA.initialize(process.env.GATSBY_GA_TRACKING_ID!)
@@ -22,8 +29,7 @@ export class App extends Component<PageProps> {
 	}
 
 	public render = () => {
-		const articles = this.getArticles()
-		console.log(articles)
+		const articles = this.articles
 		return (
 			<Router>
 				{
@@ -39,6 +45,7 @@ export class App extends Component<PageProps> {
 	private getArticles = ():ArticleInterface[] => {
         const data = this.props.data
 		const posts = data.allMarkdownRemark.edges
+        console.log(posts)
 		const slugs = posts.map(post => post.node.fields.slug)
 		const articles = posts.map((post, i) => {
 			const articleFields = post.node.frontmatter

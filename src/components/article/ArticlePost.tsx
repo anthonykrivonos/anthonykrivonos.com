@@ -37,11 +37,11 @@ export class ArticlePost extends Component<ArticleProps> {
         const { article, side } = this.props
         return (
             <View className={'article-container'}>
-                <View className={addClasses('row d-flex', side === 'left' ? 'flex-row' : 'flex-row-reverse')}>
+                <View className={`row d-flex ${side === 'left' ? 'flex-row' : 'flex-row-reverse'}`}>
                     <View className={'col-md-4 pr-4'}>
                         <Anchor onClick={this.openArticle} className={'font-header weight-black h2'}>{article.title}</Anchor>
                         {
-                            side === 'mobile' &&
+                            side === 'mobile' && article && article.image &&
                             <View onMouseOver={this.onHover} onMouseOut={this.onHoverOut} onMouseDown={this.onClick} onMouseUp={this.onClickUp} className={`article-image-container article-image-${this.imageId} w-100 mt-3 mb-3`}>
                                 <CacheImage className={`article-image article-image-${this.imageId} w-100 h-100`} src={article.image} alt={article.title} />
                             </View>
@@ -58,7 +58,7 @@ export class ArticlePost extends Component<ArticleProps> {
                         </View>
                     </View>
                     {
-                        side !== 'mobile' &&
+                        side !== 'mobile' && article && article.image &&
                         <View className={'col-md-8 d-flex align-items-center justify-content-center'}>
                             <View onMouseOver={this.onHover} onMouseOut={this.onHoverOut} onMouseDown={this.onClick} onMouseUp={this.onClickUp} className={`article-image-container article-image-${this.imageId} w-100`}>
                                 <CacheImage className={`article-image article-image-${this.imageId} w-100 h-100`} src={article.image} alt={article.title} />
@@ -121,8 +121,8 @@ export class ArticlePost extends Component<ArticleProps> {
             setTimeout(() => {
                 containerCopy.animate({
                     opacity: 0,
-                }, 500)
-            }, 500)
+                }, 750)
+            }, 750)
 
             // Animate the page container
             $('.container').animate({

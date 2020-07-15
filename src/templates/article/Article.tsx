@@ -11,7 +11,6 @@ import { Navigation, DeviceUtil } from '../../utils'
 import './Article.sass'
 import '../../App.sass'
 import { addClasses } from '../../constants'
-import { Link } from 'gatsby';
 
 interface ArticleProps {
     article?: ArticleInterface
@@ -107,11 +106,12 @@ const ArticleInner = ({ isPreview, article, isMobile }) => (
         <View className={'pt-4'}>
             {
                 !isPreview &&
-                <Link
-                    to={'/'}
-                    style={{ textDecoration: 'none' }}
-                    children={<View className={'color-primary font-title weight-bold'}>{"↩ Go Back"}</View>}
-                />
+                <a href="/">
+                    <Button
+                        onClick={() => false}
+                        children={<View className={'color-primary font-title weight-bold'}>{"↩ Go Back"}</View>}
+                    />
+                </a>
             }
             <View className={'font-header weight-black h1'}>{article.title}</View>
             <View className={'article-line bg-light mt-4 mb-3'} />
