@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 import $ from 'jquery'
 
-import { View, NavigationBar, ArticlePost, Footer } from '../../components'
+import { View, Wrapper, NavigationBar, ArticlePost, Footer } from '../../components'
 import { Splash } from './components'
 import { Article } from '../../models'
 import { Page } from '../Page'
@@ -23,22 +23,24 @@ export class Home extends Page {
     public renderDesktop = ():ReactNode => {
         const articles:Article[] = this.props.articles
         return (
-            <View className={'home container pt-4 pb-4'}>
-                <NavigationBar />
-                <Splash />
-                <View className={'mt-4 mb-4 pt-4 pb-4'}>
-                    {
-                        articles.map((article, i) => (
-                            <ArticlePost
-                                key={`post-${i}`}
-                                article={article}
-                                side={i % 2 === 0 ? 'left' : 'right'}
-                            />
-                        ))
-                    }
+            <Wrapper>
+                <View className={'home container pt-4 pb-4'}>
+                    <NavigationBar />
+                    <Splash />
+                    <View className={'mt-4 mb-4 pt-4 pb-4'}>
+                        {
+                            articles.map((article, i) => (
+                                <ArticlePost
+                                    key={`post-${i}`}
+                                    article={article}
+                                    side={i % 2 === 0 ? 'left' : 'right'}
+                                />
+                            ))
+                        }
+                    </View>
+                    <Footer />
                 </View>
-                <Footer />
-            </View>
+            </Wrapper>
         )
     }
 
