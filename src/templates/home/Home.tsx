@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 import $ from 'jquery'
 
-import { View, Wrapper, NavigationBar, ArticlePost, Footer } from '../../components'
+import { View, NavigationBar, ArticlePost, Footer } from '../../components'
 import { Splash } from './components'
 import { Article } from '../../models'
 import { Page } from '../Page'
@@ -23,7 +23,7 @@ export class Home extends Page {
     public renderDesktop = ():ReactNode => {
         const articles:Article[] = this.props.articles
         return (
-            <Wrapper className={'home container pt-4 pb-4'}>
+            <View className={'home container pt-4 pb-4'}>
                 <NavigationBar />
                 <Splash />
                 <View className={'mt-4 mb-4 pt-4 pb-4'}>
@@ -38,14 +38,14 @@ export class Home extends Page {
                     }
                 </View>
                 <Footer />
-            </Wrapper>
+            </View>
         )
     }
 
     public renderMobile = ():ReactNode => {
         const articles:Article[] = this.props.articles
         return (
-            <Wrapper className={'home container-fluid pt-4 pb-4 p'}>
+            <View className={'home container-fluid pt-4 pb-4 p'}>
                 <NavigationBar />
                 <View className={'mt-4 mb-4'}><Splash isMobile={true} /></View>
                 <View className={'mt-4 mb-4 pt-4 pb-4'}>
@@ -60,7 +60,7 @@ export class Home extends Page {
                     }
                 </View>
                 <Footer isMobile={true} />
-            </Wrapper>
+            </View>
         )
     }
 

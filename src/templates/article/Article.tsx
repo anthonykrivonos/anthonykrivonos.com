@@ -5,9 +5,9 @@ import $ from 'jquery'
 import ReactGA from 'react-ga'
 
 import { Article as ArticleInterface } from '../../models'
-import { Wrapper, View, CacheImage, Tag, Footer, Button } from '../../components'
+import { View, CacheImage, Tag, Footer, Button } from '../../components'
 import { Page } from '../Page'
-import { Navigation, DeviceUtil } from '../../utils'
+import { DeviceUtil } from '../../utils'
 import './Article.sass'
 import '../../App.sass'
 import { addClasses } from '../../constants'
@@ -57,14 +57,14 @@ export default class Article extends Page<ArticleProps> {
         const article = this.article
         const isPreview = this.props.isPreview
         return (
-            <Wrapper className={'w-100'}>
+            <View className={'w-100'}>
                 <View className={`article-image-container article-image-container-cover w-100`}>
                     <CacheImage className={`article-image w-100 h-100`} src={article.image} alt={article.title} />
                 </View>
                 <View className={'article-container-offset bg-white'}>
                     <ArticleInner isPreview={isPreview} article={article} isMobile={false} />
                 </View>
-            </Wrapper>
+            </View>
         )
     }
 
@@ -72,14 +72,14 @@ export default class Article extends Page<ArticleProps> {
         const article = this.article
         const isPreview = this.props.isPreview
         return (
-            <Wrapper className={'w-100'}>
+            <View className={'w-100'}>
                 <View className={`article-image-container article-image-container-cover w-100`}>
                     <CacheImage className={`article-image w-100 h-100`} src={article.image} alt={article.title} />
                 </View>
                 <View className={'article-container-offset bg-white'}>
                     <ArticleInner isPreview={isPreview} article={article} isMobile={true} />
                 </View>
-            </Wrapper>
+            </View>
         )
     }
 

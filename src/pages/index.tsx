@@ -5,6 +5,7 @@ import ReactGA from 'react-ga'
 
 import { Home, Article } from '../templates'
 import { Article as ArticleInterface } from '../models'
+import { Wrapper } from '../components'
 
 export interface PageProps extends RouteComponentProps {
 	data?:any
@@ -31,14 +32,16 @@ export class App extends Component<PageProps> {
 	public render = () => {
 		const articles = this.articles
 		return (
-			<Router>
-				{
-					articles.map((article, i) => (
-						<Article key={`article-${i}`} path={`/article${article.slug}`} article={article} />
-					))
-				}
-                <Home exact path={'/'} articles={articles} />
-			</Router>
+			<Wrapper>
+				<Router>
+					{
+						articles.map((article, i) => (
+							<Article key={`article-${i}`} path={`/article${article.slug}`} article={article} />
+						))
+					}
+					<Home exact path={'/'} articles={articles} />
+				</Router>
+			</Wrapper>
 		)
 	}
 
