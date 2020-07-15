@@ -23,23 +23,21 @@ export class Home extends Page {
     public renderDesktop = ():ReactNode => {
         const articles:Article[] = this.props.articles
         return (
-            <Wrapper>
-                <View className={'home container pt-4 pb-4'}>
-                    <NavigationBar />
-                    <Splash />
-                    <View className={'mt-4 mb-4 pt-4 pb-4'}>
-                        {
-                            articles.map((article, i) => (
-                                <ArticlePost
-                                    key={`post-${i}`}
-                                    article={article}
-                                    side={i % 2 === 0 ? 'left' : 'right'}
-                                />
-                            ))
-                        }
-                    </View>
-                    <Footer />
+            <Wrapper className={'home container pt-4 pb-4'}>
+                <NavigationBar />
+                <Splash />
+                <View className={'mt-4 mb-4 pt-4 pb-4'}>
+                    {
+                        articles.map((article, i) => (
+                            <ArticlePost
+                                key={`post-${i}`}
+                                article={article}
+                                side={i % 2 === 0 ? 'left' : 'right'}
+                            />
+                        ))
+                    }
                 </View>
+                <Footer />
             </Wrapper>
         )
     }
@@ -47,23 +45,21 @@ export class Home extends Page {
     public renderMobile = ():ReactNode => {
         const articles:Article[] = this.props.articles
         return (
-            <Wrapper>
-                <View className={'home container-fluid pt-4 pb-4 p'}>
-                    <NavigationBar />
-                    <View className={'mt-4 mb-4'}><Splash isMobile={true} /></View>
-                    <View className={'mt-4 mb-4 pt-4 pb-4'}>
-                        {
-                            articles.map((article, i) => (
-                                <ArticlePost
-                                    key={`post-${i}`}
-                                    article={article}
-                                    side={'mobile'}
-                                />
-                            ))
-                        }
-                    </View>
-                    <Footer isMobile={true} />
+            <Wrapper className={'home container-fluid pt-4 pb-4 p'}>
+                <NavigationBar />
+                <View className={'mt-4 mb-4'}><Splash isMobile={true} /></View>
+                <View className={'mt-4 mb-4 pt-4 pb-4'}>
+                    {
+                        articles.map((article, i) => (
+                            <ArticlePost
+                                key={`post-${i}`}
+                                article={article}
+                                side={'mobile'}
+                            />
+                        ))
+                    }
                 </View>
+                <Footer isMobile={true} />
             </Wrapper>
         )
     }
