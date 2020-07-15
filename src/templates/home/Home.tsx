@@ -47,22 +47,24 @@ export class Home extends Page {
     public renderMobile = ():ReactNode => {
         const articles:Article[] = this.props.articles
         return (
-            <View className={'home container-fluid pt-4 pb-4 p'}>
-                <NavigationBar />
-                <View className={'mt-4 mb-4'}><Splash isMobile={true} /></View>
-                <View className={'mt-4 mb-4 pt-4 pb-4'}>
-                    {
-                        articles.map((article, i) => (
-                            <ArticlePost
-                                key={`post-${i}`}
-                                article={article}
-                                side={'mobile'}
-                            />
-                        ))
-                    }
+            <Wrapper>
+                <View className={'home container-fluid pt-4 pb-4 p'}>
+                    <NavigationBar />
+                    <View className={'mt-4 mb-4'}><Splash isMobile={true} /></View>
+                    <View className={'mt-4 mb-4 pt-4 pb-4'}>
+                        {
+                            articles.map((article, i) => (
+                                <ArticlePost
+                                    key={`post-${i}`}
+                                    article={article}
+                                    side={'mobile'}
+                                />
+                            ))
+                        }
+                    </View>
+                    <Footer isMobile={true} />
                 </View>
-                <Footer isMobile={true} />
-            </View>
+            </Wrapper>
         )
     }
 
