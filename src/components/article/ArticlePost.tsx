@@ -9,7 +9,6 @@ import { CacheImage } from '../image'
 import { Tag } from '../tag'
 
 import './ArticlePost.sass'
-import { addClasses } from '../../constants'
 
 export interface ArticleProps {
     side: 'left' | 'right' | 'mobile'
@@ -27,10 +26,12 @@ export class ArticlePost extends Component<ArticleProps> {
 
     public state = {
         isTransitioning: false,
+        side: 'left' as 'left' | 'right' | 'mobile'
     }
 
     public componentDidMount = () => {
         $('.article-image-container').on('dragstart', () => false)
+        this.setState({ side: this.props.side })
     }
 
     public render = () => {
@@ -41,7 +42,7 @@ export class ArticlePost extends Component<ArticleProps> {
                     <View className={'col-md-4 pr-4'}>
                         <Anchor onClick={this.openArticle} className={'font-header weight-black h2'}>{article.title}</Anchor>
                         {
-                            side === 'mobile' && article && article.image &&
+                            this.state.side && this.state.side === 'mobile' && article && article.image &&
                             <View onMouseOver={this.onHover} onMouseOut={this.onHoverOut} onMouseDown={this.onClick} onMouseUp={this.onClickUp} className={`article-image-container article-image-${this.imageId} w-100 mt-3 mb-3`}>
                                 <CacheImage className={`article-image article-image-${this.imageId} w-100 h-100`} src={article.image} alt={article.title} />
                             </View>
@@ -58,7 +59,7 @@ export class ArticlePost extends Component<ArticleProps> {
                         </View>
                     </View>
                     {
-                        side !== 'mobile' && article && article.image &&
+                        this.state.side && this.state.side !== 'mobile' && article && article.image &&
                         <View className={'col-md-8 d-flex align-items-center justify-content-center'}>
                             <View onMouseOver={this.onHover} onMouseOut={this.onHoverOut} onMouseDown={this.onClick} onMouseUp={this.onClickUp} className={`article-image-container article-image-${this.imageId} w-100`}>
                                 <CacheImage className={`article-image article-image-${this.imageId} w-100 h-100`} src={article.image} alt={article.title} />

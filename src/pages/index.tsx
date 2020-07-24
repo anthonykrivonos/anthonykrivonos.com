@@ -34,12 +34,12 @@ export class App extends Component<PageProps> {
 		return (
 			<Wrapper>
 				<Router>
+					<Home exact path={'/'} articles={articles} />
 					{
 						articles.map((article, i) => (
 							<Article key={`article-${i}`} path={`/article${article.slug}`} article={article} />
 						))
 					}
-					<Home exact path={'/'} articles={articles} />
 				</Router>
 			</Wrapper>
 		)
