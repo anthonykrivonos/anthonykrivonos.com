@@ -10,6 +10,12 @@ export class Page<T=any> extends Component<RouteComponentProps<T>> {
         super(props)
         this.id = Date.now()
         this.render = this.renderResponsive
+        DeviceUtil.onReady(() => {
+            const isDesktop = DeviceUtil.isM()
+            if (this.state.isDesktop !== isDesktop) {
+                this.setState({ isDesktop })
+            }
+        })
         DeviceUtil.onResize(() => {
             const isDesktop = DeviceUtil.isM()
             if (this.state.isDesktop !== isDesktop) {

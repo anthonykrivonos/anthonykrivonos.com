@@ -7,15 +7,19 @@ export interface ViewProps extends React.DetailedHTMLProps<React.HTMLAttributes<
 
 export class View extends Component<ViewProps> {
 
-    public render = () => {
-        const props:ViewProps = Object.assign({}, this.props)
-        const style:CSSProperties = Object.assign({}, this.props.style)
+    public state = {
+        inline: false
+    }
+
+    public componentDidMount() {
         if (this.props.inline){
-            style.display = 'inline'
+            this.setState({ inline: true })
         }
-        props.inline = undefined
+    }
+
+    public render = () => {
         return (
-            <div {...props} style={style} />
+            this.state.inline ? <span {...this.props} /> : <div {...this.props} />
         )
     }
 

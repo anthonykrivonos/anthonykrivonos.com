@@ -38,7 +38,7 @@ export class ArticlePost extends Component<ArticleProps> {
         const { article, side } = this.props
         return (
             <View className={'article-container'}>
-                <View className={`row d-flex ${side === 'left' ? 'flex-row' : 'flex-row-reverse'}`}>
+                <View className={`row d-flex ${this.state.side && this.state.side === 'left' ? 'flex-row' : 'flex-row-reverse'}`}>
                     <View className={'col-md-4 pr-4'}>
                         <Anchor onClick={this.openArticle} className={'font-header weight-black h2'}>{article.title}</Anchor>
                         {
