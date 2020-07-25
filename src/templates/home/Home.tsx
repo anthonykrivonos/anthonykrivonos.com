@@ -47,7 +47,7 @@ export class Home extends Page {
         return (
             <View className={'home container-fluid pt-4 pb-4 p'}>
                 <NavigationBar />
-                <View className={'mt-4 mb-4'}><Splash isMobile={true} /></View>
+                <View className={'mt-4 mb-4'}><Splash /></View>
                 <View className={'mt-4 mb-4 pt-4 pb-4'}>
                     {
                         articles.map((article, i) => (
