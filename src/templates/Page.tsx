@@ -15,9 +15,7 @@ export class Page<T=any> extends Component<RouteComponentProps<T>> {
     public componentDidMount = () => {
         DeviceUtil.onReady(() => {
             const isDesktop = DeviceUtil.isM()
-            if (this.state.isDesktop !== isDesktop) {
-                this.setState({ isDesktop })
-            }
+            this.setState({ isDesktop })
         })
         DeviceUtil.onResize(() => {
             const isDesktop = DeviceUtil.isM()
