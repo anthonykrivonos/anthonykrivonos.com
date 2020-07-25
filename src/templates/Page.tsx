@@ -10,6 +10,9 @@ export class Page<T=any> extends Component<RouteComponentProps<T>> {
         super(props)
         this.id = Date.now()
         this.render = this.renderResponsive
+    }
+
+    public componentDidMount = () => {
         DeviceUtil.onReady(() => {
             const isDesktop = DeviceUtil.isM()
             if (this.state.isDesktop !== isDesktop) {
@@ -28,13 +31,9 @@ export class Page<T=any> extends Component<RouteComponentProps<T>> {
         isDesktop: null
     } as any
 
-    public renderDesktop = ():ReactNode => {
-        return null
-    }
+    public renderDesktop = ():ReactNode => null
 
-    public renderMobile = ():ReactNode => {
-        return null
-    }
+    public renderMobile = ():ReactNode => null
 
     private renderResponsive = ():ReactNode => {
         const desktopContent = this.renderDesktop()
