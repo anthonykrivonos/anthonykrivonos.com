@@ -4,30 +4,24 @@ import { DeviceUtil } from '../utils'
 
 export class Page<T=any> extends Component<RouteComponentProps<T>> {
 
-    private id!:number
+    public state = {
+        isDesktop: null
+    } as any
 
     constructor(props:any) {
         super(props)
-        this.id = Date.now()
         this.render = this.renderResponsive
-    }
-
-    public componentDidMount = () => {
         DeviceUtil.onReady(() => {
             const isDesktop = DeviceUtil.isM()
             this.setState({ isDesktop })
         })
         DeviceUtil.onResize(() => {
             const isDesktop = DeviceUtil.isM()
-            if (this.state.isDesktop !== isDesktop) {
+            if (!this.state.isDesktop || this.state.isDesktop !== isDesktop) {
                 this.setState({ isDesktop })
             }
         })
     }
-
-    public state = {
-        isDesktop: null
-    } as any
 
     public renderDesktop = ():ReactNode => null
 
@@ -37,9 +31,9 @@ export class Page<T=any> extends Component<RouteComponentProps<T>> {
         const desktopContent = this.renderDesktop()
         const mobileContent = this.renderMobile()
 
-        if (desktopContent && DeviceUtil.isM()) {
+        if (desktopContent && this.state.isDesktop) {
             return desktopContent
-        } else if (mobileContent) {
+        } else if (mobileContent && this.state.isDesktop === false) {
             return mobileContent
         } else {
             return null
