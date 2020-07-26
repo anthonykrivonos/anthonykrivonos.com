@@ -34,8 +34,12 @@ export class ArticlePost extends Component<ArticleProps> {
         this.setState({ side: this.props.side })
     }
 
+    public componentWillReceiveProps = () => {
+        this.setState({ side: this.props.side })
+    }
+
     public render = () => {
-        const { article, side } = this.props
+        const { article } = this.props
         return (
             <View className={'article-container'}>
                 <View className={`row d-flex ${this.state.side && this.state.side === 'left' ? 'flex-row' : 'flex-row-reverse'}`}>
