@@ -2,7 +2,7 @@
 templateKey: article
 title: Designing Like You’re Not a Software Engineer
 subtitle: Medium
-caption: February 2019
+caption: Winter 2019
 image: /img/1_r008ftkjtr4eix-j0sth_g.jpeg
 tags:
   - Design
