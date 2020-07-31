@@ -2,7 +2,7 @@
 templateKey: article
 title: My 5 Startup Sins and What I've Learned from Them
 subtitle: Twine
-caption: Spring 2020
+caption: Spring 2018
 image: /img/cover.png
 tags:
   - Twine
