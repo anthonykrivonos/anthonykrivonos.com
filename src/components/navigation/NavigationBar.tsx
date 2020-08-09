@@ -25,7 +25,7 @@ export class NavigationBar extends Component<NavigationBarProps> {
         return (
             <View className={'d-flex justify-content-start align-items-center'}>
                 <View className={'mr-4'}>
-                    <CacheImage onMouseEnter={() => this.setState({ mouseOver: true })} onMouseLeave={() => { this.setState({ mouseOver: false }); this.rotate()} } style={{ width: '5em', borderRadius: '2.5em', filter: `${mouseOver ? 'sepia() ' : ''}hue-rotate(${currentRotation}deg)` }} src={'img/professional.jpg'} alt={'Logo'} />
+                    <CacheImage onMouseEnter={() => this.setState({ mouseOver: true })} onMouseLeave={() => { this.setState({ mouseOver: false }); this.rotate()} } style={{ width: '5em', borderRadius: '2.5em', filter: `${mouseOver ? 'sepia() ' : ''}hue-rotate(${currentRotation}deg)` }} src={'img/pro.jpg'} alt={'Logo'} />
                 </View>
                 <View>
                     <View className={'font-title weight-black h4 mt-2'}>
