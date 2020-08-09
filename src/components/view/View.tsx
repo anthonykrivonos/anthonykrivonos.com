@@ -12,14 +12,16 @@ export class View extends Component<ViewProps> {
     }
 
     public componentDidMount() {
-        if (this.props.inline){
+        if (this.props.inline) {
             this.setState({ inline: true })
         }
     }
 
     public render = () => {
+        const props: any = Object.assign({}, this.props)
+        delete props.inline
         return (
-            this.state.inline ? <span {...this.props} /> : <div {...this.props} />
+            this.state.inline ? <span {...props} /> : <div {...props} />
         )
     }
 

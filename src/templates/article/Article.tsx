@@ -115,12 +115,12 @@ const ArticleInner = ({ isPreview, article, isMobile }) => (
             }
             <View className={'font-header weight-black h1'}>{article.title}</View>
             <View className={'article-line bg-light mt-4 mb-3'} />
-            <View className={'d-flex align-items-center'}>
-                <View>
+            <View className={'align-items-center row'}>
+                <View className={'col-12'}>
                     <View className={'font-title weight-bold h5'}>{article.subtitle}</View>
                     { article.caption && <View className={'text-upper weight-bold font-italic color-light'}>{article.caption}</View> }
                 </View>
-                { article.tags && <View className={'text-right flex-1'}>
+                { article.tags && <View className={'col-12 align-items-left d-flex flex-wrap mt-3'}>
                     {
                         article.tags.map(tag => (
                             <Tag key={`tag-${tag}`} name={tag} />

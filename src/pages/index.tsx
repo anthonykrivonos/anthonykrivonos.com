@@ -53,7 +53,9 @@ export class App extends Component<PageProps> {
 		const articles = posts.map((post, i) => {
 			const articleFields = post.node.frontmatter
 			articleFields.slug = slugs[i]
-			articleFields.image = articleFields.image.publicURL
+			if (articleFields.image) {
+				articleFields.image = articleFields.image.publicURL
+			}
 			return articleFields as ArticleInterface
 		})
 		return articles

@@ -34,6 +34,12 @@ export class ArticlePost extends Component<ArticleProps> {
         this.setState({ side: this.props.side })
     }
 
+    public componentDidUpdate = () => {
+        if (this.state.side != this.props.side) {
+            this.setState({ side: this.props.side })
+        }
+    }
+
     public componentWillReceiveProps = () => {
         this.setState({ side: this.props.side })
     }
@@ -54,7 +60,7 @@ export class ArticlePost extends Component<ArticleProps> {
                         <View className={'article-line bg-light mt-4 mb-3'} />
                         <View className={'font-title weight-bold h5'}>{article.subtitle}</View>
                         { article.caption && <View className={'text-upper weight-bold font-italic color-light'}>{article.caption}</View> }
-                        <View className={'mt-3'}>
+                        <View className={'mt-3 d-flex align-items-start flex-wrap'}>
                             {
                                 article.tags.map(tag => (
                                     <Tag key={`tag-${tag}`} name={tag} />

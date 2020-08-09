@@ -59,6 +59,14 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        name: 'anthonykrivonos.com',
+        short_name: 'anthonykrivonos.com',
+        icon: 'src/images/favicon.png',
+      }
+    },
+    {
       resolve: 'gatsby-plugin-netlify-cms',
       options: {
         modulePath: `${__dirname}/src/cms/cms.ts`,
@@ -77,14 +85,6 @@ module.exports = {
         mergeLinkHeaders: false,
         mergeCachingHeaders: false
       },
-    },
-    {
-      resolve: 'gatsby-plugin-manifest',
-      options: {
-        name: 'anthonykrivonos.com',
-        short_name: 'anthonykrivonos.com',
-        icon: 'src/images/favicon.png',
-      }
     }
   ],
 }

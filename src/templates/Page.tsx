@@ -17,7 +17,7 @@ export class Page<T=any> extends Component<RouteComponentProps<T>> {
         })
         DeviceUtil.onResize(() => {
             const isDesktop = DeviceUtil.isM()
-            if (!this.state.isDesktop || this.state.isDesktop !== isDesktop) {
+            if (this.state.isDesktop == null || this.state.isDesktop !== isDesktop) {
                 this.setState({ isDesktop })
             }
         })
@@ -28,16 +28,18 @@ export class Page<T=any> extends Component<RouteComponentProps<T>> {
     public renderMobile = ():ReactNode => null
 
     private renderResponsive = ():ReactNode => {
-        const desktopContent = this.renderDesktop()
-        const mobileContent = this.renderMobile()
-
-        if (desktopContent && this.state.isDesktop) {
-            return desktopContent
-        } else if (mobileContent && this.state.isDesktop === false) {
-            return mobileContent
-        } else {
-            return null
+        if (this.state.isDesktop === true) {
+            const desktopContent = this.renderDesktop()
+            if (desktopContent) {
+                return desktopContent
+            }
+        } else if (this.state.isDesktop === false) {
+            const mobileContent = this.renderMobile()
+            if (mobileContent) {
+                return mobileContent
+            }
         }
+        return null
     }
 
 }

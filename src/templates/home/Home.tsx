@@ -22,6 +22,7 @@ export class Home extends Page {
 
     public renderDesktop = ():ReactNode => {
         const articles:Article[] = this.props.articles
+        console.log('desktop')
         return (
             <View className={'home container pt-4 pb-4'}>
                 <NavigationBar />
@@ -44,6 +45,7 @@ export class Home extends Page {
 
     public renderMobile = ():ReactNode => {
         const articles:Article[] = this.props.articles
+        console.log('mobile')
         return (
             <View className={'home container-fluid pt-4 pb-4 p'}>
                 <NavigationBar />

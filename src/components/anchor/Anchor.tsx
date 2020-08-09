@@ -5,9 +5,9 @@ import { colors, addClasses } from '../../constants'
 import { ViewProps } from '../view'
 
 import './Anchor.sass'
+import { getRandomColor } from '../../constants/colors';
 
 export interface AnchorProps extends ViewProps {
-    underlineColor?: string
     href?: string
     children: string
 }
@@ -15,12 +15,13 @@ export interface AnchorProps extends ViewProps {
 export class Anchor extends Component<AnchorProps> {
 
     public state = {
-        underlined: false
+        underlined: false,
+        underlineColor: colors.primary,
     }
 
     public render = () => {
-        const { children, className, underlineColor, href, onClick } = this.props
-        const { underlined } = this.state
+        const { children, className, href, onClick } = this.props
+        const { underlined, underlineColor } = this.state
         return (
             <View onClick={onClick} className={'anchor-container position-relative clickable d-flex flex-row'} onMouseOver={this.onHover} onMouseOut={this.onHoverOut}>
                 {
@@ -50,15 +51,11 @@ export class Anchor extends Component<AnchorProps> {
     }
 
     private onHover = () => {
-        this.setState({ underlined: true })
+        this.setState({ underlined: true, underlineColor: getRandomColor() })
     }
 
     private onHoverOut = () => {
         this.setState({ underlined: false })
-    }
-
-    public static defaultProps = {
-        underlineColor: colors.quaternary,
     }
 
 }

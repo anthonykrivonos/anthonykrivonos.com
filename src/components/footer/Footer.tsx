@@ -3,6 +3,7 @@ import React, { Component} from 'react'
 import { View } from '../view'
 import './Footer.sass'
 import { addClasses } from '../../constants'
+import { Anchor } from '../anchor'
 
 interface FooterProps {
     isMobile?: boolean

@@ -7,6 +7,7 @@ import { URL } from '../../models'
 import { Button } from '../button'
 import { Navigation } from '../../utils'
 import { colors } from '../../constants'
+import { Anchor } from '../anchor/Anchor';
 
 interface NavigationBarProps {
     data?: any
@@ -14,14 +15,20 @@ interface NavigationBarProps {
 
 export class NavigationBar extends Component<NavigationBarProps> {
 
+    state = {
+        mouseOver: false,
+        currentRotation: 0,
+    }
+
     public render = () => {
+        const { currentRotation, mouseOver } = this.state
         return (
             <View className={'d-flex justify-content-start align-items-center'}>
-                <View className={'mr-3'}>
-                    <CacheImage style={{ width: '3em' }} src={'img/logo.png'} alt={'Logo'} />
+                <View className={'mr-4'}>
+                    <CacheImage onMouseEnter={() => this.setState({ mouseOver: true })} onMouseLeave={() => { this.setState({ mouseOver: false }); this.rotate()} } style={{ width: '5em', borderRadius: '2.5em', filter: `${mouseOver ? 'sepia() ' : ''}hue-rotate(${currentRotation}deg)` }} src={'img/professional.jpg'} alt={'Logo'} />
                 </View>
                 <View>
-                    <View className={'font-title weight-black h4 mt-3'}>
+                    <View className={'font-title weight-black h4 mt-2'}>
                         Anthony Krivonos
                     </View>
                     <StaticQuery
@@ -40,19 +47,15 @@ export class NavigationBar extends Component<NavigationBarProps> {
                             }
                         `}
                         render={data => (
-                            <View>
+                            <View className={'d-flex align-items-left'}>
                                 {
                                     data.allMarkdownRemark.edges.map(edge => ({
                                         name: edge.node.frontmatter.title,
                                         src: edge.node.frontmatter.url,
                                     }) as URL).map(url => (
-                                        <Button
-                                            key={url.name}
-                                            text={url.name}
-                                            onClick={() => Navigation.go(url.src)}
-                                            textColor={colors.medium}
-                                            className={'mr-2'}
-                                        />
+                                        <View className={'mr-2'}>
+                                            <Anchor key={url.name} onClick={() => Navigation.go(url.src)} className={'color-medium'}>{url.name}</Anchor>
+                                        </View>
                                     ))
                                 }
                             </View>
@@ -61,6 +64,11 @@ export class NavigationBar extends Component<NavigationBarProps> {
                 </View>
             </View>
         )
+    }
+
+    private rotate = () => {
+        const currentRotation = Math.floor(Math.random() * 360) + 1
+        this.setState({ currentRotation })
     }
 
 }

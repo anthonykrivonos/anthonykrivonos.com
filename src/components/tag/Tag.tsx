@@ -11,7 +11,7 @@ export class Tag extends Component<TagProps> {
     public render = () => {
         const { name } = this.props
         return (
-            <View inline className={'article-tag bg-light p-2 pt-2 pb-2 mr-2 unselectable'}>
+            <View className={'article-tag bg-light p-2 mt-1 mb-1 mr-2 unselectable d-flex'}>
                 <View inline className={'font-bold text-upper h7'}>{name}</View>
             </View>
         )
