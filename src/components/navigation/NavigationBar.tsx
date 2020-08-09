@@ -11,6 +11,7 @@ import { Anchor } from '../anchor/Anchor';
 
 interface NavigationBarProps {
     data?: any
+    isMobile?: boolean
 }
 
 export class NavigationBar extends Component<NavigationBarProps> {
@@ -21,10 +22,11 @@ export class NavigationBar extends Component<NavigationBarProps> {
     }
 
     public render = () => {
+        const { isMobile } = this.props
         const { currentRotation, mouseOver } = this.state
         return (
-            <View className={'d-flex justify-content-start align-items-center'}>
-                <View className={'mr-4'}>
+            <View className={`d-flex justify-content-start align-items-center ${isMobile ? 'flex-wrap' : ''}`}>
+                <View className={`mr-4 ${isMobile ? 'mb-2' : ''}`}>
                     <CacheImage onMouseEnter={() => this.setState({ mouseOver: true })} onMouseLeave={() => { this.setState({ mouseOver: false }); this.rotate()} } style={{ width: '5em', borderRadius: '2.5em', filter: `${mouseOver ? 'sepia() ' : ''}hue-rotate(${currentRotation}deg)` }} src={'img/pro.jpg'} alt={'Logo'} />
                 </View>
                 <View>
@@ -47,13 +49,13 @@ export class NavigationBar extends Component<NavigationBarProps> {
                             }
                         `}
                         render={data => (
-                            <View className={'d-flex align-items-left'}>
+                            <View className={'d-flex align-items-left flex-wrap'}>
                                 {
                                     data.allMarkdownRemark.edges.map(edge => ({
                                         name: edge.node.frontmatter.title,
                                         src: edge.node.frontmatter.url,
-                                    }) as URL).map(url => (
-                                        <View className={'mr-2'}>
+                                    }) as URL).map((url, key) => (
+                                        <View key={`nb-${key}`} className={'mr-2'}>
                                             <Anchor key={url.name} onClick={() => Navigation.go(url.src)} className={'color-medium'}>{url.name}</Anchor>
                                         </View>
                                     ))
