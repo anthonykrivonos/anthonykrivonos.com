@@ -10,7 +10,7 @@ tags:
   - Classification
   - Neural Nets
   - ConvNets
-date: 2020-08-11T03:22:27.237Z
+date: 2020-05-16T03:22:27.237Z
 ---
 <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
