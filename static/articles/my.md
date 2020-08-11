@@ -7,7 +7,7 @@ image: /img/1_r008ftkjtr4eix-j0sth_g.jpeg
 tags:
   - Design
   - Opinion
-date: 2020-07-01T15:05:53.373Z
+date: 2018-12-30T16:05:53.373Z
 ---
 > *[Originally posted on Medium](https://medium.com/@abkrivonos/how-to-design-like-youre-not-a-software-engineer-for-software-engineers-b0c33c112a9) on Feb 28, 2019.*
 
