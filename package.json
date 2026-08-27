@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Anthony Krivonos's personal site.",
+  "description": "Personal website of Anthony Krivonos.",
   "scripts": {
     "build": "bun src/build.tsx",
     "dev": "bun scripts/dev.ts",
