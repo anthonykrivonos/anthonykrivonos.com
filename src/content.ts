@@ -85,3 +85,13 @@ export function formatDate(d: Date): string {
 export function isoDate(d: Date): string {
   return d.toISOString().slice(0, 10);
 }
+
+/** "12/30/18" -- the compact form the writing list uses. */
+export function shortDate(d: Date): string {
+  return d.toLocaleDateString("en-US", {
+    year: "2-digit",
+    month: "numeric",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+}

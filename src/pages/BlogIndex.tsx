@@ -1,16 +1,16 @@
 import type { Post } from "../content.ts";
-import { formatDate, isoDate } from "../content.ts";
+import { shortDate, isoDate } from "../content.ts";
 
 export function BlogIndex({ posts }: { posts: Post[] }) {
   return (
     <>
-      <h1>Blog</h1>
+      <h2>Writing</h2>
       <ul className="posts">
         {posts.map((p) => (
           <li key={p.slug}>
-            <time className="date" dateTime={isoDate(p.date)}>{formatDate(p.date)}</time>
             <a href={`/blog/${p.slug}`}>{p.title}</a>
-            <div className="summary">{p.summary}</div>
+            <time className="date" dateTime={isoDate(p.date)}>{shortDate(p.date)}</time>
+            <span className="summary">{p.summary}</span>
           </li>
         ))}
       </ul>
