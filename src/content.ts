@@ -13,11 +13,21 @@ export interface Post {
   Body: Body;
 }
 
+export interface NewsItem {
+  /** The headline as published, so the link is a faithful citation. */
+  title: string;
+  outlet: string;
+  url: string;
+  /** ISO date; the list is rendered newest first. */
+  date: string;
+}
+
 export interface Site {
   name: string;
   url: string;
   description: string;
   links: { title: string; url: string }[];
+  news: NewsItem[];
 }
 
 export const siteData: Site = site;
