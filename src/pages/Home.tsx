@@ -1,11 +1,12 @@
 import type { Body, Post } from "../content.ts";
 import { siteData, shortDate, isoDate } from "../content.ts";
+import { mdxComponents } from "../components/Link.tsx";
 
 export function Home({ Body, posts }: { Body: Body; posts: Post[] }) {
   return (
     <>
       <h2>{siteData.name}</h2>
-      <Body />
+      <Body components={mdxComponents} />
       <h3>Writing</h3>
       <ul className="posts">
         {posts.map((p) => (

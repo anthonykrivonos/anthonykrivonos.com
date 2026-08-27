@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { siteData } from "../content.ts";
+import { Link } from "./Link.tsx";
 
 interface Props {
   /** Page <title>. The site name is appended unless this *is* the site name. */
@@ -45,7 +46,7 @@ export function Layout({ title, description, path, css, children }: Props) {
         {children}
         <footer>
           {siteData.links.map((l) => (
-            <a key={l.url} href={l.url}>{l.title}</a>
+            <Link key={l.url} href={l.url}>{l.title}</Link>
           ))}
         </footer>
       </body>

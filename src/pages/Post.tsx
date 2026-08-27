@@ -1,5 +1,6 @@
 import type { Post as PostType } from "../content.ts";
 import { siteData, formatDate, isoDate } from "../content.ts";
+import { mdxComponents } from "../components/Link.tsx";
 
 /** Title, byline, date -- the heading order the reference's essay pages use. */
 export function Post({ post }: { post: PostType }) {
@@ -9,7 +10,7 @@ export function Post({ post }: { post: PostType }) {
       <h1>{post.title}</h1>
       <h2>{siteData.name}</h2>
       <h3><time dateTime={isoDate(post.date)}>{formatDate(post.date)}</time></h3>
-      <Body />
+      <Body components={mdxComponents} />
     </>
   );
 }
