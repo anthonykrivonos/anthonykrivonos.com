@@ -12,11 +12,6 @@
       "destination": "/blog/designing-like-youre-not-a-software-engineer",
       "permanent": true
     },
-    {
-      "source": "/article/my-5-startup-sins-and-what-ive-learned-from-them",
-      "destination": "/blog/my-5-startup-sins-and-what-ive-learned-from-them",
-      "permanent": true
-    },
     { "source": "/article/:slug*", "destination": "/blog", "permanent": true },
     { "source": "/admin", "destination": "/", "permanent": true },
     { "source": "/admin/:path*", "destination": "/", "permanent": true }

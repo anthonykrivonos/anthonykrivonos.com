@@ -7,6 +7,9 @@ body {
   background: #fff;
   color: #000;
   font-family: Verdana, Helvetica, sans-serif;
+  /* 14px at a default root size. Relative so it still tracks the reader's own
+     browser font-size setting. Headings are sized in em, so they follow. */
+  font-size: 87.5%;
 }
 
 a { color: #00e; }

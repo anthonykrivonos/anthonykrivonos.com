@@ -83,4 +83,5 @@ await Bun.write(`${DIST}/feed.xml`,
 for (const f of written) {
   console.log(`  ${f}  ${((await Bun.file(f).size) / 1024).toFixed(1)} KB`);
 }
-console.log(`\n${written.length} pages, ${posts.length} posts, published ${isoDate(latest)}`);
+const n = posts.length;
+console.log(`\n${written.length} pages, ${n} post${n === 1 ? "" : "s"}, latest ${isoDate(latest)}`);
