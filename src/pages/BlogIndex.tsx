@@ -4,7 +4,7 @@ import { shortDate, isoDate } from "../content.ts";
 export function BlogIndex({ posts }: { posts: Post[] }) {
   return (
     <>
-      <h2>Writing</h2>
+      <h1>Writing</h1>
       <ul className="posts">
         {posts.map((p) => (
           <li key={p.slug}>

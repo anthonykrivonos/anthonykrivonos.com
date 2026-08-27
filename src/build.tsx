@@ -12,6 +12,7 @@ Bun.plugin(mdx); // register the .md loader in Bun's runtime resolver
 
 const { loadPosts, loadHome, siteData, isoDate } = await import("./content.ts");
 const { Layout } = await import("./components/Layout.tsx");
+type ArticleMeta = import("./components/Layout.tsx").ArticleMeta;
 const { Home } = await import("./pages/Home.tsx");
 const { BlogIndex } = await import("./pages/BlogIndex.tsx");
 const { Post } = await import("./pages/Post.tsx");
@@ -27,9 +28,27 @@ const home = await loadHome();
 
 const written: string[] = [];
 
-async function writePage(path: string, title: string, description: string, node: ReactNode) {
+interface PageOpts {
+  article?: ArticleMeta;
+  noindex?: boolean;
+}
+
+async function writePage(
+  path: string,
+  title: string,
+  description: string,
+  node: ReactNode,
+  opts: PageOpts = {},
+) {
   const html = renderToStaticMarkup(
-    <Layout title={title} description={description} path={path} css={css}>
+    <Layout
+      title={title}
+      description={description}
+      path={path}
+      css={css}
+      article={opts.article}
+      noindex={opts.noindex}
+    >
       {node}
     </Layout>,
   );
@@ -44,15 +63,21 @@ async function writePage(path: string, title: string, description: string, node:
 await writePage("/", siteData.name, siteData.description, <Home Body={home.Body} posts={posts} />);
 await writePage("/blog", "Blog", `Writing by ${siteData.name}.`, <BlogIndex posts={posts} />);
 for (const post of posts) {
-  await writePage(`/blog/${post.slug}`, post.title, post.summary, <Post post={post} />);
+  await writePage(`/blog/${post.slug}`, post.title, post.summary, <Post post={post} />, {
+    article: { published: isoDate(post.date) },
+  });
 }
-await writePage("/404", "Not found", "That page does not exist.", <NotFound />);
+await writePage("/404", "Not found", "That page does not exist.", <NotFound />, { noindex: true });
 
 // Static assets
 await cp("public", DIST, { recursive: true });
 
 // robots.txt + sitemap.xml + Atom feed
-const urls = ["/", "/blog", ...posts.map((p) => `/blog/${p.slug}`)];
+const urls: { loc: string; lastmod: string }[] = [
+  { loc: "/", lastmod: isoDate(posts[0]!.date) },
+  { loc: "/blog", lastmod: isoDate(posts[0]!.date) },
+  ...posts.map((p) => ({ loc: `/blog/${p.slug}`, lastmod: isoDate(p.date) })),
+];
 const latest = posts[0]!.date;
 
 await Bun.write(`${DIST}/robots.txt`,
@@ -60,7 +85,9 @@ await Bun.write(`${DIST}/robots.txt`,
 
 await Bun.write(`${DIST}/sitemap.xml`,
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-  urls.map((u) => `  <url><loc>${new URL(u, siteData.url).href}</loc></url>`).join("\n") +
+  urls
+    .map((u) => `  <url><loc>${new URL(u.loc, siteData.url).href}</loc><lastmod>${u.lastmod}</lastmod></url>`)
+    .join("\n") +
   `\n</urlset>\n`);
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

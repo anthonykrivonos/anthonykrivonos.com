@@ -11,10 +11,10 @@ export function Home({ Body, posts }: { Body: Body; posts: Post[] }) {
         <img src="/img/me.webp" alt="Anthony Krivonos as a child, at a desktop computer in 2001" width={600} height={600} />
         <figcaption>2001</figcaption>
       </figure>
-      <h2>{siteData.name}</h2>
+      <h1>{siteData.name}</h1>
       <Body components={mdxComponents} />
 
-      <h3>Writing</h3>
+      <h2>Writing</h2>
       <ul className="posts">
         {posts.map((p) => (
           <li key={p.slug}>
@@ -26,7 +26,7 @@ export function Home({ Body, posts }: { Body: Body; posts: Post[] }) {
 
       {news.length > 0 && (
         <>
-          <h3>News</h3>
+          <h2>News</h2>
           <ul className="posts">
             {news.map((n) => (
               <li key={n.url}>

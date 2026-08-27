@@ -53,3 +53,10 @@ footer { clear: both; }
 @media (max-width: 34rem) {
   figure.portrait { float: none; margin: 0 0 1em; width: 60%; max-width: 220px; }
 }
+
+/* Byline under a post title. Carries the weight the h2/h3 used to give it
+   without taking their place in the heading outline. */
+p.byline {
+  font-weight: bold;
+  margin: .5em 0 1.5em;
+}
