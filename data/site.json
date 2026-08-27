@@ -1,0 +1,12 @@
+{
+  "name": "Anthony Krivonos",
+  "url": "https://anthonykrivonos.com",
+  "description": "Anthony Krivonos is a co-founder and CTO of Toma. He writes occasionally about design, software, and startups.",
+  "links": [
+    { "title": "Resume", "url": "https://docs.google.com/document/d/1ftyJz3rHQT0U5rJE5VkJjxBgr7y6zOXELJdXfXUkayg/edit?usp=sharing" },
+    { "title": "GitHub", "url": "https://github.com/anthonykrivonos" },
+    { "title": "LinkedIn", "url": "https://linkedin.com/in/anthonykrivonos" },
+    { "title": "Dribbble", "url": "https://dribbble.com/anthonykrivonos" },
+    { "title": "Legacy site", "url": "https://anthony-krivonos-website.web.app/" }
+  ]
+}
