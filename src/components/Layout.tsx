@@ -25,8 +25,6 @@ export function Layout({ title, description, path, css, children }: Props) {
         <title>{fullTitle}</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={canonical} />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/favicon.png" />
         <link rel="alternate" type="application/atom+xml" href="/feed.xml" title={siteData.name} />
         <meta property="og:type" content={path.startsWith("/blog/") ? "article" : "website"} />
         <meta property="og:title" content={fullTitle} />
