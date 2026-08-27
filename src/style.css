@@ -30,3 +30,26 @@ img { max-width: 100%; height: auto; }
 code { font-family: monospace; }
 
 blockquote { margin: 1em 40px; }
+
+/* The homepage portrait sits to the right of the bio, as on the reference
+   site. Below the breakpoint it becomes a normal block so the text is not
+   squeezed into a narrow column beside it. */
+figure.portrait {
+  float: right;
+  margin: 0 0 1em 1.5em;
+  width: 260px;
+  max-width: 40%;
+}
+figure.portrait img { display: block; width: 100%; }
+figure.portrait figcaption {
+  text-align: center;
+  color: gray;
+  font-size: .85em;
+  margin-top: .25em;
+}
+/* Keep the footer rule below the float rather than beside it. */
+footer { clear: both; }
+
+@media (max-width: 34rem) {
+  figure.portrait { float: none; margin: 0 0 1em; width: 60%; max-width: 220px; }
+}

@@ -7,6 +7,10 @@ export function Home({ Body, posts }: { Body: Body; posts: Post[] }) {
 
   return (
     <>
+      <figure className="portrait">
+        <img src="/img/me.webp" alt="Anthony Krivonos as a child, at a desktop computer in 2001" width={600} height={600} />
+        <figcaption>2001</figcaption>
+      </figure>
       <h2>{siteData.name}</h2>
       <Body components={mdxComponents} />
 
