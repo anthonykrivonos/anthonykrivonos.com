@@ -1,7 +1,7 @@
 import type { Post as PostType } from "../content.ts";
 import { siteData, formatDate, isoDate } from "../content.ts";
 
-/** Mirrors the reference's essay pages: h1 title, h2 author, h3 date. */
+/** Title, byline, date -- the heading order the reference's essay pages use. */
 export function Post({ post }: { post: PostType }) {
   const { Body } = post;
   return (

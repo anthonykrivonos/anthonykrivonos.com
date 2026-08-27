@@ -27,15 +27,9 @@ const home = await loadHome();
 
 const written: string[] = [];
 
-async function writePage(
-  path: string,
-  title: string,
-  description: string,
-  node: ReactNode,
-  bodyClass?: string,
-) {
+async function writePage(path: string, title: string, description: string, node: ReactNode) {
   const html = renderToStaticMarkup(
-    <Layout title={title} description={description} path={path} css={css} bodyClass={bodyClass}>
+    <Layout title={title} description={description} path={path} css={css}>
       {node}
     </Layout>,
   );
@@ -50,7 +44,7 @@ async function writePage(
 await writePage("/", siteData.name, siteData.description, <Home Body={home.Body} posts={posts} />);
 await writePage("/blog", "Blog", `Writing by ${siteData.name}.`, <BlogIndex posts={posts} />);
 for (const post of posts) {
-  await writePage(`/blog/${post.slug}`, post.title, post.summary, <Post post={post} />, "essay");
+  await writePage(`/blog/${post.slug}`, post.title, post.summary, <Post post={post} />);
 }
 await writePage("/404", "Not found", "That page does not exist.", <NotFound />);
 

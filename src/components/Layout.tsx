@@ -8,12 +8,10 @@ interface Props {
   /** Path for the canonical URL, e.g. "/blog/some-post". */
   path: string;
   css: string;
-  /** Long-form pages set "essay" to switch the body font to the serif. */
-  bodyClass?: string;
   children: ReactNode;
 }
 
-export function Layout({ title, description, path, css, bodyClass, children }: Props) {
+export function Layout({ title, description, path, css, children }: Props) {
   const fullTitle = title === siteData.name ? title : `${title} - ${siteData.name}`;
   const canonical = new URL(path, siteData.url).href;
   const isHome = path === "/";
@@ -37,7 +35,7 @@ export function Layout({ title, description, path, css, bodyClass, children }: P
         {/* Inlined so every page is exactly one request. */}
         <style dangerouslySetInnerHTML={{ __html: css }} />
       </head>
-      <body className={bodyClass}>
+      <body>
         {!isHome && (
           <nav>
             <a href="/">{siteData.name}</a>

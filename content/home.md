@@ -2,15 +2,12 @@
 title: Anthony Krivonos
 ---
 
-Anthony Krivonos is a co-founder and CTO of [Toma](https://toma.so), where he builds
-voice AI agents that handle phone calls for car dealerships. Toma went through Y
-Combinator in the winter 2024 batch and raised a Series A led by Andreessen Horowitz
-in 2025.
+I am a lifelong builder, having co-founded and currently serving as CTO of [Toma](https://toma.so).
 
-Before Toma he was a senior software engineer at Scale AI, working on data curation
-tooling for machine learning models. He has also written software at Lyft, Amazon Web
-Services, and NBCUniversal. Earlier projects include SayHi, one of the first ChatGPT
-plugins for LinkedIn, and AlgoRaven, a visual editor for crypto trading algorithms.
+The greatest joy in my life has been building things. I spent my early days nailing boards with my grandfather at my family's дача. I was an early contributor to the 2D platformer genre on the GameMaker forum. I wrote several Pokémon ROM hacks before becoming enamored by VFX editing and photography. It took learning web development as a teenager to realize the triptych of a career I wanted to embark on: to program, to build, and to make pretty.
 
-He studied computer science at Fordham University and computer engineering at Columbia
-University. He lives in San Francisco.
+I spent the early years of my career meandering between startups and big tech, balancing several side projects I blindly hoped could become big one day. None of them did. I caught my lucky break after a couple formative years at Scale AI. My friends and I finally made it out of pivot hell and founded one of the earliest voice AI companies. We were headed for Y Combinator in January 2024.
+
+A lot has changed since then. I spent 10,000 hours trying to scale a company. I failed to listen to my gut when it was right, and I made difficult decisions in haste. I saw PMF and I saw it vanish. I interviewed thousands and fired dozens of people. I compared myself to colleagues that were seemingly holding it together.
+
+Eventually, I learned that optimism is a choice. It was the single most important learning of my life. The other learnings, well, I think I'll put them here.

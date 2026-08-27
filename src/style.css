@@ -1,17 +1,12 @@
 /* Styled after incompleteideas.net: browser defaults plus a font choice.
-   Index pages are Verdana, essays are Palatino. Default type sizes, default
-   `normal` line-height, default underlined blue links, full width. */
+   Default type sizes, default `normal` line-height, default underlined blue
+   links, full width. Every page uses the same treatment. */
 
 body {
   margin: 8px;
   background: #fff;
   color: #000;
   font-family: Verdana, Helvetica, sans-serif;
-}
-
-/* Long-form reading gets the serif, as the reference's essay pages do. */
-body.essay {
-  font-family: Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
 }
 
 a { color: #00e; }
