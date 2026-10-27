@@ -16,6 +16,12 @@
     { "source": "/admin", "destination": "https://www.anthonykrivonos.com/", "permanent": true },
     { "source": "/admin/:path*", "destination": "https://www.anthonykrivonos.com/", "permanent": true },
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "anthonykrivonos.com" }],
+      "destination": "https://www.anthonykrivonos.com/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "anthonykrivonos.com" }],
       "destination": "https://www.anthonykrivonos.com/:path*",
