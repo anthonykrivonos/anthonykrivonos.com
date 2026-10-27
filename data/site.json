@@ -1,7 +1,10 @@
 {
   "name": "Anthony Krivonos",
-  "url": "https://anthonykrivonos.com",
+  "url": "https://www.anthonykrivonos.com",
   "description": "Personal website of Anthony Krivonos.",
+  "jobTitle": "Co-founder and CTO",
+  "worksFor": { "name": "Toma", "url": "https://toma.so" },
+  "profiles": ["https://medium.com/@abkrivonos"],
   "links": [
     {
       "title": "GitHub",

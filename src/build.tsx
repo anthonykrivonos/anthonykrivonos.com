@@ -27,10 +27,14 @@ const posts = await loadPosts();
 const home = await loadHome();
 
 const written: string[] = [];
+/** Every indexable page adds itself here as it is written; sitemap.xml is built from it. */
+const sitemap: { loc: string; lastmod: Date }[] = [];
 
 interface PageOpts {
   article?: ArticleMeta;
   noindex?: boolean;
+  /** When the page's content last changed. Required unless noindex. */
+  lastmod?: Date;
 }
 
 async function writePage(
@@ -58,13 +62,31 @@ async function writePage(
     : `${DIST}${path}/index.html`;
   await Bun.write(file, `<!doctype html>\n${html}\n`);
   written.push(file);
+  if (!opts.noindex) {
+    if (!opts.lastmod) throw new Error(`${path}: indexable page needs a lastmod`);
+    sitemap.push({ loc: new URL(path, siteData.url).href, lastmod: opts.lastmod });
+  }
 }
 
-await writePage("/", siteData.name, siteData.description, <Home Body={home.Body} posts={posts} />);
-await writePage("/blog", "Blog", `Writing by ${siteData.name}.`, <BlogIndex posts={posts} />);
+const newest = (...ds: (Date | undefined)[]) =>
+  new Date(Math.max(...ds.filter((d): d is Date => !!d).map((d) => d.getTime())));
+const postModified = (p: (typeof posts)[number]) => p.updated ?? p.date;
+// The home page and the index list every post, so a new or edited post changes them too.
+const latestPost = newest(...posts.map(postModified));
+
+await writePage("/", siteData.name, siteData.description, <Home Body={home.Body} posts={posts} />, {
+  lastmod: newest(home.updated, latestPost),
+});
+await writePage("/blog", "Blog", `Writing by ${siteData.name}.`, <BlogIndex posts={posts} />, {
+  lastmod: latestPost,
+});
 for (const post of posts) {
   await writePage(`/blog/${post.slug}`, post.title, post.summary, <Post post={post} />, {
-    article: { published: isoDate(post.date) },
+    article: {
+      published: isoDate(post.date),
+      modified: post.updated && isoDate(post.updated),
+    },
+    lastmod: postModified(post),
   });
 }
 await writePage("/404", "Not found", "That page does not exist.", <NotFound />, { noindex: true });
@@ -73,20 +95,14 @@ await writePage("/404", "Not found", "That page does not exist.", <NotFound />, 
 await cp("public", DIST, { recursive: true });
 
 // robots.txt + sitemap.xml + Atom feed
-const urls: { loc: string; lastmod: string }[] = [
-  { loc: "/", lastmod: isoDate(posts[0]!.date) },
-  { loc: "/blog", lastmod: isoDate(posts[0]!.date) },
-  ...posts.map((p) => ({ loc: `/blog/${p.slug}`, lastmod: isoDate(p.date) })),
-];
-const latest = posts[0]!.date;
 
 await Bun.write(`${DIST}/robots.txt`,
   `User-agent: *\nAllow: /\n\nSitemap: ${new URL("/sitemap.xml", siteData.url).href}\n`);
 
 await Bun.write(`${DIST}/sitemap.xml`,
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-  urls
-    .map((u) => `  <url><loc>${new URL(u.loc, siteData.url).href}</loc><lastmod>${u.lastmod}</lastmod></url>`)
+  sitemap
+    .map((u) => `  <url><loc>${u.loc}</loc><lastmod>${isoDate(u.lastmod)}</lastmod></url>`)
     .join("\n") +
   `\n</urlset>\n`);
 
@@ -97,12 +113,12 @@ await Bun.write(`${DIST}/feed.xml`,
   `  <link href="${siteData.url}"/>\n` +
   `  <link rel="self" href="${new URL("/feed.xml", siteData.url).href}"/>\n` +
   `  <id>${siteData.url}/</id>\n` +
-  `  <updated>${latest.toISOString()}</updated>\n` +
+  `  <updated>${latestPost.toISOString()}</updated>\n` +
   `  <author><name>${esc(siteData.name)}</name></author>\n` +
   posts.map((p) => {
     const href = new URL(`/blog/${p.slug}`, siteData.url).href;
     return `  <entry>\n    <title>${esc(p.title)}</title>\n    <link href="${href}"/>\n` +
-      `    <id>${href}</id>\n    <updated>${p.date.toISOString()}</updated>\n` +
+      `    <id>${href}</id>\n    <updated>${postModified(p).toISOString()}</updated>\n` +
       `    <summary>${esc(p.summary)}</summary>\n  </entry>`;
   }).join("\n") +
   `\n</feed>\n`);
@@ -111,4 +127,4 @@ for (const f of written) {
   console.log(`  ${f}  ${((await Bun.file(f).size) / 1024).toFixed(1)} KB`);
 }
 const n = posts.length;
-console.log(`\n${written.length} pages, ${n} post${n === 1 ? "" : "s"}, latest ${isoDate(latest)}`);
+console.log(`\n${written.length} pages, ${n} post${n === 1 ? "" : "s"}, latest ${isoDate(posts[0]!.date)}`);

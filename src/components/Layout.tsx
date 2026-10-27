@@ -29,45 +29,99 @@ export function Layout({ title, description, path, css, article, noindex, childr
   const canonical = abs(path);
   const isHome = path === "/";
   const image = abs("/img/me.webp");
+  const imageAlt = `${siteData.name} as a child, at a desktop computer in 2001`;
 
-  const author = { "@type": "Person", name: siteData.name, url: siteData.url };
+  // One @graph per page. The site and the person are described on every page
+  // under stable @ids, so each page's own node can point at them by reference
+  // and search engines merge them into a single entity.
+  const home = abs("/");
+  const person = { "@id": `${home}#person` };
+  const website = { "@id": `${home}#website` };
+  const blog = { "@id": `${abs("/blog")}#blog` };
 
-  const jsonLd = article
-    ? {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        headline: title,
-        description,
-        url: canonical,
-        mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
-        datePublished: article.published,
-        dateModified: article.modified ?? article.published,
-        author,
-        publisher: author,
-        image,
-        inLanguage: "en",
-      }
-    : isHome
-      ? {
-          "@context": "https://schema.org",
-          "@type": "Person",
-          name: siteData.name,
-          url: siteData.url,
+  const crumbs = (items: [string, string][]) => ({
+    "@type": "BreadcrumbList",
+    itemListElement: items.map(([name, p], i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name,
+      item: abs(p),
+    })),
+  });
+
+  const pageNodes: object[] = article
+    ? [
+        {
+          "@type": "BlogPosting",
+          "@id": `${canonical}#article`,
+          headline: title,
           description,
+          url: canonical,
+          mainEntityOfPage: canonical,
+          datePublished: article.published,
+          dateModified: article.modified ?? article.published,
+          author: person,
+          publisher: person,
+          isPartOf: blog,
           image,
-          sameAs: siteData.links.map((l) => l.url),
-        }
-      : path === "/blog"
-        ? {
-            "@context": "https://schema.org",
-            "@type": "Blog",
-            name: `${siteData.name} - Blog`,
+          inLanguage: "en",
+        },
+        crumbs([[siteData.name, "/"], ["Blog", "/blog"], [title, path]]),
+      ]
+    : isHome
+      ? [
+          {
+            "@type": "ProfilePage",
+            "@id": canonical,
             url: canonical,
+            name: fullTitle,
             description,
-            author,
+            mainEntity: person,
+            isPartOf: website,
             inLanguage: "en",
-          }
-        : null;
+          },
+        ]
+      : path === "/blog"
+        ? [
+            {
+              "@type": "Blog",
+              "@id": blog["@id"],
+              name: `${siteData.name} - Blog`,
+              url: canonical,
+              description,
+              author: person,
+              publisher: person,
+              isPartOf: website,
+              inLanguage: "en",
+            },
+            crumbs([[siteData.name, "/"], ["Blog", "/blog"]]),
+          ]
+        : [];
+
+  const jsonLd = noindex ? null : {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        ...website,
+        name: siteData.name,
+        url: home,
+        publisher: person,
+        inLanguage: "en",
+      },
+      {
+        "@type": "Person",
+        ...person,
+        name: siteData.name,
+        url: home,
+        image: { "@type": "ImageObject", url: image, width: 600, height: 600, caption: imageAlt },
+        jobTitle: siteData.jobTitle,
+        worksFor: { "@type": "Organization", ...siteData.worksFor },
+        sameAs: [...siteData.links.map((l) => l.url), ...siteData.profiles],
+      },
+      ...pageNodes,
+    ],
+  };
 
   return (
     <html lang="en">
@@ -76,7 +130,7 @@ export function Layout({ title, description, path, css, article, noindex, childr
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{fullTitle}</title>
         <meta name="description" content={description} />
-        <link rel="canonical" href={canonical} />
+        {!noindex && <link rel="canonical" href={canonical} />}
         <meta
           name="robots"
           content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large"}
@@ -90,7 +144,10 @@ export function Layout({ title, description, path, css, article, noindex, childr
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonical} />
         <meta property="og:image" content={image} />
-        <meta property="og:image:alt" content={`${siteData.name} as a child, at a desktop computer in 2001`} />
+        <meta property="og:image:type" content="image/webp" />
+        <meta property="og:image:width" content="600" />
+        <meta property="og:image:height" content="600" />
+        <meta property="og:image:alt" content={imageAlt} />
         {article && <meta property="article:published_time" content={article.published} />}
         {article && <meta property="article:modified_time" content={article.modified ?? article.published} />}
         {article && <meta property="article:author" content={siteData.name} />}
@@ -99,6 +156,7 @@ export function Layout({ title, description, path, css, article, noindex, childr
         <meta name="twitter:title" content={fullTitle} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={image} />
+        <meta name="twitter:image:alt" content={imageAlt} />
 
         <meta name="author" content={siteData.name} />
         {jsonLd && (
@@ -120,7 +178,8 @@ export function Layout({ title, description, path, css, article, noindex, childr
         {children}
         <footer>
           {siteData.links.map((l) => (
-            <Link key={l.url} href={l.url}>{l.title}</Link>
+            // rel="me" ties these profiles to this site as the same person.
+            <Link key={l.url} href={l.url} rel="me noopener noreferrer">{l.title}</Link>
           ))}
         </footer>
       </body>

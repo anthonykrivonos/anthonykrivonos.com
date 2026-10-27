@@ -1,5 +1,6 @@
 ---
 title: Anthony Krivonos
+updated: 2026-08-27
 ---
 
 I am a lifelong builder, having co-founded and currently serving as CTO of [Toma](https://toma.so).

@@ -9,12 +9,24 @@
   "redirects": [
     {
       "source": "/article/my",
-      "destination": "/blog/designing-like-youre-not-a-software-engineer",
+      "destination": "https://www.anthonykrivonos.com/blog/designing-like-youre-not-a-software-engineer",
       "permanent": true
     },
-    { "source": "/article/:slug*", "destination": "/blog", "permanent": true },
-    { "source": "/admin", "destination": "/", "permanent": true },
-    { "source": "/admin/:path*", "destination": "/", "permanent": true }
+    { "source": "/article/:slug*", "destination": "https://www.anthonykrivonos.com/blog", "permanent": true },
+    { "source": "/admin", "destination": "https://www.anthonykrivonos.com/", "permanent": true },
+    { "source": "/admin/:path*", "destination": "https://www.anthonykrivonos.com/", "permanent": true },
+    {
+      "source": "/:path*/",
+      "has": [{ "type": "host", "value": "anthonykrivonos.com" }],
+      "destination": "https://www.anthonykrivonos.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "anthonykrivonos.com" }],
+      "destination": "https://www.anthonykrivonos.com/:path*",
+      "permanent": true
+    }
   ],
   "headers": [
     {

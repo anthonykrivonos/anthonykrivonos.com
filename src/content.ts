@@ -9,6 +9,8 @@ export interface Post {
   title: string;
   /** Parsed from the `date` frontmatter field. */
   date: Date;
+  /** Optional `updated` frontmatter field: the last substantive edit. */
+  updated?: Date;
   summary: string;
   Body: Body;
 }
@@ -26,6 +28,11 @@ export interface Site {
   name: string;
   url: string;
   description: string;
+  /** Structured data only: Person.jobTitle and Person.worksFor. */
+  jobTitle: string;
+  worksFor: { name: string; url: string };
+  /** Profiles listed in Person.sameAs but not in the footer. */
+  profiles: string[];
   links: { title: string; url: string }[];
   news: NewsItem[];
 }
@@ -48,6 +55,22 @@ function require_(fm: Record<string, unknown>, path: string, field: string): str
   return v;
 }
 
+function dateField(
+  fm: Record<string, unknown>,
+  path: string,
+  field: string,
+  optional = false,
+): Date | undefined {
+  const raw = fm[field];
+  if (raw === undefined && optional) return undefined;
+  // YAML parses an unquoted ISO date into a Date already; a quoted one stays a string.
+  const d = raw instanceof Date ? raw : new Date(String(raw));
+  if (Number.isNaN(d.getTime())) {
+    throw new Error(`${path}: frontmatter field "${field}" is not a valid date`);
+  }
+  return d;
+}
+
 export async function loadPosts(): Promise<Post[]> {
   const paths = [...new Bun.Glob("content/blog/*.md").scanSync()].sort();
   if (paths.length === 0) throw new Error("no posts found in content/blog");
@@ -58,27 +81,27 @@ export async function loadPosts(): Promise<Post[]> {
       const title = require_(fm, path, "title");
       const summary = require_(fm, path, "summary");
 
-      // YAML parses an unquoted ISO date into a Date already; a quoted one stays a string.
-      const rawDate = fm.date;
-      const date = rawDate instanceof Date ? rawDate : new Date(String(rawDate));
-      if (Number.isNaN(date.getTime())) {
-        throw new Error(`${path}: frontmatter field "date" is not a valid date`);
-      }
+      const date = dateField(fm, path, "date")!;
+      const updated = dateField(fm, path, "updated", true);
 
       const mod = (await import(`${process.cwd()}/${path}`)) as { default: Body };
       const slug = path.replace(/^content\/blog\//, "").replace(/\.md$/, "");
-      return { slug, title, date, summary, Body: mod.default };
+      return { slug, title, date, updated, summary, Body: mod.default };
     }),
   );
 
   return posts.sort((a, b) => b.date.getTime() - a.date.getTime());
 }
 
-export async function loadHome(): Promise<{ title: string; Body: Body }> {
+export async function loadHome(): Promise<{ title: string; updated?: Date; Body: Body }> {
   const path = "content/home.md";
   const fm = await rawFrontmatter(path);
   const mod = (await import(`${process.cwd()}/${path}`)) as { default: Body };
-  return { title: require_(fm, path, "title"), Body: mod.default };
+  return {
+    title: require_(fm, path, "title"),
+    updated: dateField(fm, path, "updated", true),
+    Body: mod.default,
+  };
 }
 
 /** "December 30, 2018" -- built from UTC parts so the output never shifts with TZ. */
