@@ -17,9 +17,33 @@
   ],
   "news": [
     {
+      "title": "Why Andreessen Horowitz is betting big on this AI startup",
+      "outlet": "Next Play",
+      "url": "https://nextplayso.substack.com/p/why-andreessen-horowitz-is-betting",
+      "date": "2025-09-25"
+    },
+    {
+      "title": "Monik and Anthony",
+      "outlet": "Finta",
+      "url": "https://www.finta.com/founders/toma",
+      "date": "2025-08-04"
+    },
+    {
+      "title": "Toma: AI Platform for the $2T Automotive Industry",
+      "outlet": "Y Combinator",
+      "url": "https://www.ycombinator.com/launches/O48-toma-ai-platform-for-the-2t-automotive-industry",
+      "date": "2025-07-28"
+    },
+    {
       "title": "Investing in Toma",
       "outlet": "Andreessen Horowitz",
       "url": "https://a16z.com/announcement/investing-in-toma/",
+      "date": "2025-06-05"
+    },
+    {
+      "title": "Holman invests in Toma's dealership call automation platform",
+      "outlet": "Automotive News",
+      "url": "https://www.autonews.com/retail/an-toma-raises-17-million-0605/",
       "date": "2025-06-05"
     }
   ]
